@@ -1,0 +1,9 @@
+FROM golang as builder
+WORKDIR /go/src/app
+COPY hello.go .
+RUN go build hello.go
+
+FROM scratch
+ADD lib.tar.gz /
+COPY --from=builder /go/src/app/hello /
+CMD ["/hello"]
